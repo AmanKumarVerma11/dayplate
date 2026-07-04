@@ -1,6 +1,6 @@
 # 🍳 DayPlate — AI Cooking To-Do List
 
-**Live demo:** _(added after deploy)_
+**Live demo:** <https://dayplate.vercel.app>
 
 DayPlate is a smart, dynamic cooking assistant. You describe your day — how many people
 you're feeding, your diet, cuisine, budget, and how much time you have — and it generates a
