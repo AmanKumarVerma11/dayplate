@@ -36,7 +36,7 @@ comparing against the budget — producing `comfortable` / `tight` / `over-budge
 
 ### Real GenAI — no canned data
 
-Every plan is produced by a **live call to Google Gemini** (`gemini-2.0-flash`) via the REST
+Every plan is produced by a **live call to Google Gemini** (`gemini-flash-latest`) via the REST
 `generateContent` endpoint, using a strict JSON `responseSchema` so output is structured and
 reliable. There is **no mock mode, no hardcoded sample plan, no fallback fake data**. If the key
 is missing or the model fails, the app surfaces a real error rather than fabricating a result.
@@ -86,7 +86,7 @@ Get a **free** Gemini API key at <https://aistudio.google.com/app/apikey>.
 | Name | Required | Description |
 |---|---|---|
 | `GEMINI_API_KEY` | ✅ | Google Gemini API key (server-only) |
-| `GEMINI_MODEL` | — | Override model (default `gemini-2.0-flash`) |
+| `GEMINI_MODEL` | — | Override model (default `gemini-flash-latest`) |
 
 ## Testing
 

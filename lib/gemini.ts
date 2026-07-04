@@ -8,7 +8,7 @@ import type { ModelPlan, PlanRequest } from "./types";
  * API key is read from the server-only env var and is never sent to the client.
  */
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-flash-latest";
 
 // JSON schema handed to Gemini so structured output matches ModelPlan.
 const responseSchema = {
