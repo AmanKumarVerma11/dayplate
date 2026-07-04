@@ -34,46 +34,53 @@ export default function Home() {
   }
 
   return (
-    <main id="main" className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
-      <header className="mb-8">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-          🍳 DayPlate
-        </h1>
-        <p className="mt-2 text-slate-600">
-          Your AI cooking to-do list — one request turns your day&apos;s context into a full
-          meal plan, grocery list, substitutions, and a budget check.
+    <main id="main" className="mx-auto max-w-2xl px-5 py-12 sm:py-16">
+      <header className="mb-10">
+        <div className="flex items-center gap-2.5">
+          <span
+            aria-hidden
+            className="grid h-11 w-11 place-items-center rounded-2xl bg-accent-soft text-2xl"
+          >
+            🍳
+          </span>
+          <h1 className="font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+            DayPlate
+          </h1>
+        </div>
+        <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
+          Your AI cooking to-do list. One request turns your day into a full meal plan,
+          grocery list, smart substitutions, and an honest budget check.
         </p>
       </header>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-line bg-surface p-6 shadow-soft sm:p-8">
         <PlanForm onSubmit={handleSubmit} loading={loading} />
       </section>
 
       <div aria-live="polite" aria-atomic="true" className="mt-6">
         {loading && (
-          <p className="rounded-md bg-brand/10 px-4 py-3 text-brand-dark">
+          <p className="flex items-center gap-2 rounded-xl bg-accent-soft px-4 py-3 text-accent-dark">
             Cooking up your plan with AI… this usually takes a few seconds.
           </p>
         )}
         {error && (
           <div
             role="alert"
-            className="rounded-md border border-rose-300 bg-rose-50 px-4 py-3 text-rose-900"
+            className="rounded-xl border border-danger/40 bg-danger/5 px-4 py-3 text-danger"
           >
-            <strong className="font-semibold">Couldn&apos;t generate a plan.</strong>{" "}
-            {error}
+            <strong className="font-semibold">Couldn&apos;t generate a plan.</strong> {error}
           </div>
         )}
       </div>
 
       {result && (
-        <div className="mt-8">
+        <div className="mt-10">
           <PlanResult data={result} />
         </div>
       )}
 
-      <footer className="mt-14 border-t border-slate-200 pt-6 text-center text-sm text-slate-400">
-        Meals generated live by Google Gemini · Budget math computed deterministically in-app.
+      <footer className="mt-16 border-t border-line pt-6 text-center text-sm text-muted">
+        Meals generated live by Google Gemini. Budget math computed deterministically in-app.
       </footer>
     </main>
   );

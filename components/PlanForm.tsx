@@ -13,6 +13,10 @@ const DIET_LABELS: Record<DietType, string> = {
   pescatarian: "Pescatarian",
 };
 
+const fieldBase =
+  "w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-ink shadow-sm transition-colors placeholder:text-muted focus:border-accent focus:outline-none";
+const labelBase = "mb-1.5 block text-sm font-medium text-ink";
+
 interface Props {
   onSubmit: (req: PlanRequest) => void;
   loading: boolean;
@@ -34,15 +38,15 @@ export default function PlanForm({ onSubmit, loading }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5" aria-describedby="form-help">
-      <p id="form-help" className="text-sm text-slate-600">
+    <form onSubmit={handleSubmit} className="space-y-6" aria-describedby="form-help">
+      <p id="form-help" className="text-sm text-muted">
         Tell us about your day and we&apos;ll generate a full meal plan, grocery list,
         substitutions, and a budget check.
       </p>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="people" className="mb-1 block text-sm font-medium">
+          <label htmlFor="people" className={labelBase}>
             People to feed
           </label>
           <input
@@ -54,19 +58,19 @@ export default function PlanForm({ onSubmit, loading }: Props) {
             required
             value={people}
             onChange={(e) => setPeople(Number(e.target.value))}
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className={fieldBase}
           />
         </div>
 
         <div>
-          <label htmlFor="diet" className="mb-1 block text-sm font-medium">
+          <label htmlFor="diet" className={labelBase}>
             Dietary preference
           </label>
           <select
             id="diet"
             value={diet}
             onChange={(e) => setDiet(e.target.value as DietType)}
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2"
+            className={fieldBase}
           >
             {DIETS.map((d) => (
               <option key={d} value={d}>
@@ -77,7 +81,7 @@ export default function PlanForm({ onSubmit, loading }: Props) {
         </div>
 
         <div>
-          <label htmlFor="cuisine" className="mb-1 block text-sm font-medium">
+          <label htmlFor="cuisine" className={labelBase}>
             Preferred cuisine
           </label>
           <input
@@ -88,12 +92,12 @@ export default function PlanForm({ onSubmit, loading }: Props) {
             value={cuisine}
             onChange={(e) => setCuisine(e.target.value)}
             placeholder="e.g. Indian, Italian, Thai"
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className={fieldBase}
           />
         </div>
 
         <div>
-          <label htmlFor="cookingTime" className="mb-1 block text-sm font-medium">
+          <label htmlFor="cookingTime" className={labelBase}>
             Total cooking time (minutes)
           </label>
           <input
@@ -105,12 +109,12 @@ export default function PlanForm({ onSubmit, loading }: Props) {
             required
             value={cookingTimeMinutes}
             onChange={(e) => setCookingTimeMinutes(Number(e.target.value))}
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className={fieldBase}
           />
         </div>
 
         <div>
-          <label htmlFor="budget" className="mb-1 block text-sm font-medium">
+          <label htmlFor="budget" className={labelBase}>
             Budget for the day
           </label>
           <input
@@ -122,19 +126,19 @@ export default function PlanForm({ onSubmit, loading }: Props) {
             required
             value={budget}
             onChange={(e) => setBudget(Number(e.target.value))}
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className={fieldBase}
           />
         </div>
 
         <div>
-          <label htmlFor="currency" className="mb-1 block text-sm font-medium">
+          <label htmlFor="currency" className={labelBase}>
             Currency
           </label>
           <select
             id="currency"
             value={currency}
             onChange={(e) => setCurrency(e.target.value as Currency)}
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2"
+            className={fieldBase}
           >
             {CURRENCIES.map((c) => (
               <option key={c} value={c}>
@@ -146,8 +150,8 @@ export default function PlanForm({ onSubmit, loading }: Props) {
       </div>
 
       <div>
-        <label htmlFor="notes" className="mb-1 block text-sm font-medium">
-          Notes <span className="font-normal text-slate-500">(optional)</span>
+        <label htmlFor="notes" className={labelBase}>
+          Notes <span className="font-normal text-muted">(optional)</span>
         </label>
         <textarea
           id="notes"
@@ -156,9 +160,9 @@ export default function PlanForm({ onSubmit, loading }: Props) {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Ingredients you already have, allergies, appliances (e.g. only a microwave), how busy your day is…"
-          className="w-full rounded-md border border-slate-300 px-3 py-2"
+          className={`${fieldBase} resize-y`}
         />
-        <p className="mt-1 text-right text-xs text-slate-500">
+        <p className="mt-1 text-right text-xs text-muted">
           {notes.length}/{LIMITS.notesMax}
         </p>
       </div>
@@ -166,10 +170,25 @@ export default function PlanForm({ onSubmit, loading }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-md bg-brand px-4 py-3 font-semibold text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white shadow-soft transition-all hover:bg-accent-dark active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
-        {loading ? "Planning your day…" : "Generate my meal plan"}
+        {loading ? (
+          <>
+            <Spinner /> Planning your day…
+          </>
+        ) : (
+          <>Generate my meal plan</>
+        )}
       </button>
     </form>
+  );
+}
+
+function Spinner() {
+  return (
+    <span
+      aria-hidden
+      className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+    />
   );
 }

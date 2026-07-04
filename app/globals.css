@@ -2,11 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Force light rendering of native form controls. Without this, a browser in OS
+ * dark mode paints inputs/selects with a black background and grey placeholder
+ * while the page stays light — the bug that made the form look broken.
+ */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
-/* Respect users who prefer reduced motion. */
+@layer base {
+  body {
+    @apply bg-paper text-ink antialiased;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    /* Warm, appetising paper grain — subtle, not decorative noise. */
+    background-image: radial-gradient(
+      oklch(0.7 0.09 55 / 0.05) 0.5px,
+      transparent 0.5px
+    );
+    background-size: 22px 22px;
+  }
+
+  input,
+  select,
+  textarea {
+    color-scheme: light;
+  }
+
+  ::placeholder {
+    color: oklch(0.62 0.02 60);
+    opacity: 1;
+  }
+
+  /* Visible, on-brand keyboard focus. */
+  :focus-visible {
+    outline: 2px solid oklch(0.62 0.16 42);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -15,15 +50,4 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-}
-
-/* Visible keyboard focus everywhere. */
-:focus-visible {
-  outline: 3px solid #0f766e;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-body {
-  @apply bg-slate-50 text-slate-900 antialiased;
 }
