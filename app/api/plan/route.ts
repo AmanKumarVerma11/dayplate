@@ -7,6 +7,8 @@ import type { PlanResponse } from "@/lib/types";
 // Run on the Node.js runtime; never cache — every plan is generated live.
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+// Allow the serverless function enough headroom for the model round-trip.
+export const maxDuration = 60;
 
 export async function POST(request: Request): Promise<NextResponse> {
   let payload: unknown;

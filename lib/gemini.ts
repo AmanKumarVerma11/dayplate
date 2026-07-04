@@ -122,6 +122,9 @@ export async function generatePlan(req: PlanRequest): Promise<ModelPlan> {
       temperature: 0.7,
       responseMimeType: "application/json",
       responseSchema,
+      // Disable model "thinking": far lower latency (avoids serverless timeouts)
+      // and materially cheaper token usage, which is plenty for this task.
+      thinkingConfig: { thinkingBudget: 0 },
     },
   };
 
